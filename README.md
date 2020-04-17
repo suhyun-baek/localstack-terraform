@@ -7,7 +7,7 @@
  - local
 ### 환경 구성
 #### common
- - 공통 작업
+ - 공통 작업</br>
     sudo apt-get update
     
 #### Terraform
