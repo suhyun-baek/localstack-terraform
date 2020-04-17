@@ -12,7 +12,7 @@
     
 #### Terraform
  - 필요 패키지 설치
-    sudo apt-get install unzip
+   sudo apt-get install unzip
  - 다운로드
     wget https://releases.hashicorp.com/terraform/0.12.20/terraform_0.12.20_linux_amd64.zip
  - 압축 풀기
