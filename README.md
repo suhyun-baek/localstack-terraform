@@ -162,7 +162,7 @@
  - test/send-log-to-kinesis.py 파일 실행
  
 </br></br></br></br>
-### trouble shooting
+### trouble shooting (미해결 내용 정리)
 - Terraform을 이용해 localstack에서 firehose를 생성 할 경우 extended_s3_configuration 영역이 추가가 안되 firehose와 Lambda 연결이 어려웠다. 이로 인해 AWS 실제 계정으로 전체 테스트를 진행하고 localstack에서는 진행하지 못했다.
 - Kinesis agent를 이용해 localstack의 data stream에 데이터를 전송하려 할 때 많은 이슈 발생
 	- 4/15일 localstack 설치 후 kinesis agent 테스트시 </br>
