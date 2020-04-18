@@ -93,7 +93,7 @@
 
 ### 검증 환경
  - OS : ubuntu18.04
- - nginx : nginx version: nginx/1.14.0 (Ubuntu)
+ - nginx : nginx/1.14.0 (Ubuntu)
  - Python : Python 3.6.9
 ### 검증 환경 구성
  - nginx, git 패키지 설치
