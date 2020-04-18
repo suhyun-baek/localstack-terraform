@@ -16,6 +16,8 @@
 #### common
  - 공통 작업
 	- sudo apt-get update
+	- sudo apt-get -y install git
+	- git clone https://github.com/suhyunback100/localstack-terraform.git
 
 #### Terraform
  - 필요 패키지 설치
@@ -45,10 +47,12 @@
  - Test
  	- sudo docker run hello-world
  - ubuntu 계정에 Docker 실행 권한을 주기위해 그룹 추가
- 	- sudo usermod -aG docker ubuntu
+ 	- sudo usermod -aG ubuntu docker 
  - Docker 서비스 재시작
  	- sudo service docker restart
-  
+ - docker.sock 권한 수정
+  	- sudo chmod 666 /var/run/docker.sock
+
 #### Docker-compose
  - Docker-compose 다운로드
  	- sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
@@ -106,6 +110,7 @@
  - OS : ubuntu18.04
  - nginx : nginx/1.14.0 (Ubuntu)
  - Python : Python 3.6.9
+ - openjdk : openjdk version "1.8.0_242"
 ### 검증 환경 구성
  - nginx, git 패키지 설치
  	- sudo apt-get install -y nginx git
@@ -121,6 +126,10 @@
 #### 검증 절차
  - agent 소스 내려받기
  	- git clone https://github.com/awslabs/amazon-kinesis-agent.git
+ - java 이전 버전 삭제
+ 	- sudo apt-get -y purge openjdk*
+ - java 1.8 설치
+ 	- sudo apt-get -y install openjdk-8-jdk
  - 설치 실행
  	- sudo ./setup --install
  - config 파일 수정
@@ -143,18 +152,18 @@
 	```
 	```json
 	(aws)
-	{
-	  "cloudwatch.emitMetrics": false,
-	  "kinesis.endpoint": "https://kinesis.ap-northeast-2.amazonaws.com",
-	  "awsAccessKeyId": "foo",
-	  "awsSecretAccessKey": "val",
-	  "flows": [
-	    {
-	      "filePattern": "/var/log/nginx/access.log",
-	      "kinesisStream": "nginx-log-bsh0817-stream"
-	    }
-	  ]
-	}
+{
+  "cloudwatch.emitMetrics": false,
+  "kinesis.endpoint": "https://kinesis.ap-northeast-2.amazonaws.com",
+  "awsAccessKeyId": "[awsAccessKeyId]",
+  "awsSecretAccessKey": "[awsSecretAccessKey]",
+  "flows": [
+    {
+      "filePattern": "/var/log/nginx/access.log",
+      "kinesisStream": "nginx-log-bsh0817-stream"
+    }
+  ]
+}
 	```
  - kinesis agent user nginx 로그 그룹에 권한 추가
  	- sudo gpasswd -a aws-kinesis-agent-user adm
@@ -170,7 +179,12 @@
 ### 실제 데이터 검증
 #### 방법: 실제 로그를 Python을 이용해 대량으로 전송시켜 성능 검증
 #### 구성 이유 : 다양한 로그 패턴의 오류 발생률 등을 확인하기위한 검증
+ - pip 설치
+ 	- sudo apt install -y python3-pip
+ - boto3 설치
+ 	- pip3 install boto3
  - test/send-log-to-kinesis.py 파일 실행
+ 	- python3 send-log-to-kinesis.py
  
 </br></br></br></br>
 ### trouble shooting (미해결 내용 정리)
