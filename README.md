@@ -69,11 +69,11 @@
  - 버킷 명 : nginx-log-bsh0817
  - path 구조
  	- 시간 단위로 json 형태로 변환된 nginx 로그</br>
-		- nginx-log-bsh0817/kinesis/firehose/migration/day=YYYYDDMMHH/</br>
+		- nginx-log-bsh0817/kinesis/firehose/migration/year=YYYY/month=MM/day=DD/hour=HH</br>
 	- 정상적으로 처리된 nginx 로그</br>
-		- nginx-log-bsh0817/kinesis/firehose/origin/success/YYYY/DD/MM/HH</br>
+		- nginx-log-bsh0817/kinesis/firehose/origin/success/YYYY/MM/DD/HH</br>
 	- error nginx 로그</br>
-		- nginx-log-bsh0817/kinesis/firehose/origin/error/processing-failed/YYYY/DD/MM/HH
+		- nginx-log-bsh0817/kinesis/firehose/origin/error/processing-failed/YYYY/MM/DD/HH
  
 #### Kinesis Data Stream
  - Kinesis Data Stream 명 : nginx-log-bsh0817-stream</br>
