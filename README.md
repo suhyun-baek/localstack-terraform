@@ -105,10 +105,26 @@
  - config 파일 수정</br>
     sudo vi /etc/aws-kinesis/agent.json
 	```json
+	(localstack)
 	{
 	  "cloudwatch.emitMetrics": false,
 	  "kinesis.endpoint": "http://localhost:4573",
 	  "cloudwatch.endpoint": "http://localhost:4582",
+	  "awsAccessKeyId": "foo",
+	  "awsSecretAccessKey": "val",
+	  "flows": [
+	    {
+	      "filePattern": "/var/log/nginx/access.log",
+	      "kinesisStream": "nginx-log.bsh0817-stream"
+	    }
+	  ]
+	}
+	```
+	```json
+	(aws)
+	{
+	  "cloudwatch.emitMetrics": false,
+	  "kinesis.endpoint": ""https://kinesis.ap-northeast-2.amazonaws.com",
 	  "awsAccessKeyId": "foo",
 	  "awsSecretAccessKey": "val",
 	  "flows": [
