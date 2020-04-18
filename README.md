@@ -160,3 +160,13 @@
 #### 방법: 실제 로그를 Python을 이용해 대량으로 전송시켜 성능 검증
 #### 구성 이유 : 다양한 로그 패턴의 오류 발생률 등을 확인하기위한 검증
  - test/send-log-to-kinesis.py 파일 실행
+ 
+</br></br></br></br>
+### trouble shooting
+- Terraform을 이용해 localstack에서 firehose를 생성 할 경우 extended_s3_configuration 영역이 추가가 안되 firehose와 Lambda 연결이 어려웠다. 이로 인해 AWS 실제 계정으로 전체 테스트를 진행하고 localstack에서는 진행하지 못했다.
+- Kinesis agent를 이용해 localstack의 data stream에 데이터를 전송하려 할 때 많은 이슈 발생
+	- 4/15일 localstack 설치 후 kinesis agent 테스트시 </br>
+		error: UnicodeDecodeError: 'utf-8' codec can't decode byte 0xbf in position 0: invalid start byte</br>
+	- 4/17일 15일 이슈에 대해 localstack 에 pom.xml에 jackson-dataformat-cbor을 추가 하려했으나 4/16일 업데이트이 이미 추가 되어 있어 신규로 업데이트 진행. 신규 이슈 발생</br>
+		localstack error: localstack.services.generic_proxy: Error forwarding request: 'utf-8' codec can't decode byte 0xbf in position 0</br>
+		kinesis agent error : unicodedecodeerror 'utf-8' codec can't decode byte 0xbf in position 0</br>
