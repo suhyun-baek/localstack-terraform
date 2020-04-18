@@ -90,13 +90,36 @@
  - nginx, git 패키지 설치</br>
     sudo apt-get install -y nginx git
  - nginx 실행</br>
-   	sudo service nginx start
-    (정지 : sudo service nginx stop)
+    sudo service nginx start</br>
+    (정지 : sudo service nginx stop)</br>
     (재시작 : sudo service nginx restart)
-
-#### 상태 확인
-	sudo service nginx status
+    (상태 확인 : sudo service nginx status)
  
 ### Kinesis agent 사용 검증
-### 검증 환경 구성
-
+ - agent 소스 내려받기</br>
+    git clone https://github.com/awslabs/amazon-kinesis-agent.git
+ - 설치 실행</br>
+    sudo ./setup --install
+ - config 파일 수정
+    sudo vi /etc/aws-kinesis/agent.json
+	```json
+	{
+	  "cloudwatch.emitMetrics": false,
+	  "kinesis.endpoint": "http://localhost:4573",
+	  "cloudwatch.endpoint": "http://localhost:4582",
+	  "awsAccessKeyId": "foo",
+	  "awsSecretAccessKey": "val",
+	  "flows": [
+	    {
+	      "filePattern": "/var/log/nginx/access.log",
+	      "kinesisStream": "nginx-log.bsh0817-stream",
+	      "dataProcessingOptions": [
+		    {
+			"optionName": "LOGTOJSON",
+			"logFormat": "COMBINEDAPACHELOG"
+		    }
+	       ]
+	    }
+	  ]
+	}
+	```
