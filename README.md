@@ -124,7 +124,7 @@
 	(aws)
 	{
 	  "cloudwatch.emitMetrics": false,
-	  "kinesis.endpoint": ""https://kinesis.ap-northeast-2.amazonaws.com",
+	  "kinesis.endpoint": "https://kinesis.ap-northeast-2.amazonaws.com",
 	  "awsAccessKeyId": "foo",
 	  "awsSecretAccessKey": "val",
 	  "flows": [
