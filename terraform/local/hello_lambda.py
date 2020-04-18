@@ -47,11 +47,11 @@ def lambda_handler(event, context):
             }
             context = ""
     '''
-
+    output = {}
     try:
         if "records" in event and len(event["records"]) > 0:
             # json으로 로그 형식 변경
-            json_log = fn_convert_log_to_json(event)
+            output, json_log = fn_convert_log_to_json(event)
             # 시간 단위로 로그를 분리해 s3에 업로드
             for odjectKey in json_log:
                 # odjectKey 값은 시간 정보와 첫번째 recordId 값으로 지정해 파일명의 중복을 피하고, 
@@ -63,9 +63,12 @@ def lambda_handler(event, context):
                 # print(param)
                 fn_s3_put(param)
     except : 
+        for index, record in enumerate(event['records']):
+            event['records'][index]["result"] = "Ok"
         print ("err : " + str(traceback.format_exc()))
+        return event
 
-    return {'records': event['records']}
+    return output
 
 def fn_convert_log_to_json(param):
     '''
@@ -96,7 +99,8 @@ def fn_convert_log_to_json(param):
     '''
 
     responce = {}
-    for record in param['records']:
+    for index, record in enumerate(param['records']):
+        param['records'][index]["result"] = "Ok"
         # 디코딩
         payload = base64.b64decode(record['data']).decode("utf-8")
 
@@ -113,7 +117,7 @@ def fn_convert_log_to_json(param):
         else:
             responce[payload_time] = str(json.dumps(payload_pattern_match_result, ensure_ascii=False)) + "\n"
         
-    return responce
+    return param, responce
 
 def fn_data_pattern():
     '''

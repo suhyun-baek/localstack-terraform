@@ -11,7 +11,7 @@ resource "aws_kinesis_stream" "kinesis_stream" {
 }
 
 resource "aws_iam_role" "iam_for_kinesis_firehose" {
-  name               = "iam_for_kinesis_firehose"
+  name               = "${var.project_name}_iam_for_kinesis_firehose"
 
   assume_role_policy = <<EOF
 {
@@ -31,7 +31,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "iam_for_kinesis_firehose_policy" {
-  name = "iam_for_kinesis_firehose_policy"
+  name = "${var.project_name}_iam_for_kinesis_firehose_policy"
   role = aws_iam_role.iam_for_kinesis_firehose.id
 
   policy = <<-EOF
@@ -118,8 +118,8 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
   extended_s3_configuration {
     role_arn   = aws_iam_role.iam_for_kinesis_firehose.arn
     bucket_arn = aws_s3_bucket.nginx_log.arn
-    prefix              = "${var.log_bucket_kinesis_origin_path}success"
-    error_output_prefix = "${var.log_bucket_kinesis_origin_path}error"
+    prefix              = "${var.log_bucket_kinesis_origin_path}success/"
+    error_output_prefix = "${var.log_bucket_kinesis_origin_path}error/"
     buffer_interval     = 60
     buffer_size         = 1
     processing_configuration {
@@ -131,6 +131,14 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
         parameters {
           parameter_name  = "LambdaArn"
           parameter_value = "${aws_lambda_function.firehose_lambda.arn}:$LATEST"
+        }
+        parameters {
+          parameter_name  = "BufferSizeInMBs"
+          parameter_value = "1"
+        }
+        parameters {
+          parameter_name  = "BufferIntervalInSeconds"
+          parameter_value = "60"
         }
       }
     }

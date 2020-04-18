@@ -5,7 +5,7 @@
 ###
 
 resource "aws_iam_role" "iam_for_lambda" {
-  name = "iam_for_firehose_lambda"
+  name = "${var.project_name}_iam_for_firehose_lambda"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -24,7 +24,7 @@ EOF
 
 
 resource "aws_iam_role_policy" "iam_for_lambda_policy" {
-  name = "iam_for_lambda_policy"
+  name = "${var.project_name}_iam_for_lambda_policy"
   role = aws_iam_role.iam_for_lambda.id
 
   policy = <<-EOF
@@ -67,19 +67,18 @@ data "archive_file" "zip" {
 
 
 resource "aws_lambda_function" "firehose_lambda" {
-  function_name = "firehose_lambda"
-
+  function_name    = "${var.project_name}_firehose_lambda"
+  timeout          = 120
   filename         = data.archive_file.zip.output_path
   source_code_hash = data.archive_file.zip.output_base64sha256
 
-  role    = aws_iam_role.iam_for_lambda.arn
-  handler = "hello_lambda.lambda_handler"
-  runtime = "python3.7"
-  tags = var.tag_default
+  role             = aws_iam_role.iam_for_lambda.arn
+  handler          = "hello_lambda.lambda_handler"
+  runtime          = "python3.7"
+  tags             = var.tag_default
   environment {
     variables = {
-      greeting = "Hello"
-      log_bucket_name = "${var.log_bucket_name}"
+      log_bucket_name      = "${var.log_bucket_name}"
       log_bucket_base_path = "${var.log_bucket_base_path}"
     }
   }

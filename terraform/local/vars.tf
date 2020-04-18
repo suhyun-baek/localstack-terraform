@@ -4,21 +4,12 @@ variable "project_name" {
 
 }
 
-variable "log_bucket_base_path" {
-    default = "nginx/kinesis/firehose/migration/day="
-    description = "log bucket base path"
-}
-
-variable "log_bucket_kinesis_origin_path" {
-    default = "nginx/kinesis/firehose/origin/"
-    description = "log bucket kinesis origin path"
-}
-
-
 locals {
     tag_default = {
         "project"    = "${var.project_name}"
         "Author"     = "bsh0817"
         "Created-at" = "2020-04-16"
     }
+    log_bucket_kinesis_origin_path = "${var.project_name}/kinesis/firehose/origin/"
+    log_bucket_base_path = "${var.project_name}/kinesis/firehose/migration/day="
 }
