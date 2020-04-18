@@ -31,7 +31,7 @@
 
 #### Docker
  - Docker 패키지 설치
- 	- sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+ 	- sudo apt-get -y install docker
  - Test
  	- sudo docker run hello-world
  - ubuntu 계정에 Docker 실행 권한을 주기위해 그룹 추가
