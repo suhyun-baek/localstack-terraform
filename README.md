@@ -5,38 +5,45 @@
  - Docker : Docker version 19.03.8
  - Docker-compose : docker-compose version 1.21.2
  
+### 디렉토리 구성 
+	 /localstack  = localstack를 실행하기 위한 docker-compose.yml 파일이 담겨있다.
+	 /terraform   = terraform 파일이 모두 담겨있다.
+		/terraform/module = module 파일이 담겨있다.
+		/terraform/local = localstack 구성을 위한 파일이 담겨있다.
+		/terraform/aws-test = aws에서 실제로 테스트 진행한 파일이 담겨있다.
+	 /test        = 검증을 위한 파일이 담겨있다.
 ### 환경 구성
 #### common
- - 공통 작업</br>
-    sudo apt-get update
+ - 공통 작업
+	sudo apt-get update
     
 #### Terraform
- - 필요 패키지 설치</br>
-   sudo apt-get install unzip
+ - 필요 패키지 설치
+	sudo apt-get install unzip
  - 다운로드</br>
-    wget https://releases.hashicorp.com/terraform/0.12.20/terraform_0.12.20_linux_amd64.zip
- - 압축 풀기</br>
-    unzip terraform_0.12.20_linux_amd64.zip
+	wget https://releases.hashicorp.com/terraform/0.12.20/terraform_0.12.20_linux_amd64.zip
+ - 압축 풀기
+ 	unzip terraform_0.12.20_linux_amd64.zip
  - 파일 이동</br>
-    sudo cp terraform /usr/local/bin/
+    	sudo cp terraform /usr/local/bin/
  - 버전 확인</br>
-    terraform -v
+    	terraform -v
 
 #### Docker
  - Docker 패키지 설치</br>
-    sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+    	sudo apt-get -y install docker-ce docker-ce-cli containerd.io
  - Test</br>
-    sudo docker run hello-world
+    	sudo docker run hello-world
  - ubuntu 계정에 Docker 실행 권한을 주기위해 그룹 추가</br>
-    sudo usermod -aG docker ubuntu
+    	sudo usermod -aG docker ubuntu
  - Docker 서비스 재시작</br>
-    sudo service docker restart
+    	sudo service docker restart
   
 #### Docker-compose
  - Docker-compose 다운로드</br>
-    sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+    	sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
  - 실행 권한 추가</br>
-    sudo chmod +x /usr/local/bin/docker-compose
+    	sudo chmod +x /usr/local/bin/docker-compose
 
  
  
@@ -46,13 +53,13 @@
 
 #### localstack
  - localstack/docker-compose.yml 디렉토리에서 docker-compose를 이용한 실행</br>
-    docker-compose up
+    	docker-compose up
  - http://localhost:8080 접속해서 정상적으로 실행중인지 확인
 
 #### terraform 
  - terraform/local/ 디렉토리에서 아래 두 명령어 실행</br>
-    terraform init</br>
-    terraform apply</br>
+    	terraform init
+    	terraform apply
 
 
 ### AWS 리소스 구성
@@ -60,11 +67,11 @@
  - 버킷 명 : nginx-log-bsh0817
  - path 구조
   - 시간 단위로 json 형태로 변환된 nginx 로그</br>
-      nginx-log-bsh0817/kinesis/firehose/migration/day=YYYYDDMMHH/</br>
+      	nginx-log-bsh0817/kinesis/firehose/migration/day=YYYYDDMMHH/</br>
   - 정상적으로 처리된 nginx 로그</br>
-      nginx-log-bsh0817/kinesis/firehose/origin/success/YYYY/DD/MM/HH</br>
+      	nginx-log-bsh0817/kinesis/firehose/origin/success/YYYY/DD/MM/HH</br>
   - error nginx 로그</br>
-      nginx-log-bsh0817/kinesis/firehose/origin/error/processing-failed/YYYY/DD/MM/HH
+      	nginx-log-bsh0817/kinesis/firehose/origin/error/processing-failed/YYYY/DD/MM/HH
  
 #### Kinesis Data Stream
  - Kinesis Data Stream 명 : nginx-log-bsh0817-stream</br>
@@ -88,23 +95,23 @@
  - Python : Python 3.6.9
 ### 검증 환경 구성
  - nginx, git 패키지 설치</br>
-    sudo apt-get install -y nginx git
+    	sudo apt-get install -y nginx git
  - nginx 실행</br>
-    sudo service nginx start</br>
-    (정지 : sudo service nginx stop)</br>
-    (재시작 : sudo service nginx restart)
-    (상태 확인 : sudo service nginx status)
+    	sudo service nginx start</br>
+    	(정지 : sudo service nginx stop)</br>
+    	(재시작 : sudo service nginx restart)
+    	(상태 확인 : sudo service nginx status)
  
 ### Kinesis agent 사용해 프로세스 검증
 #### 방법: nginx에 실제 access log가 쌓이게 한 후에 Kinesis agent를 활용해 kinesis data stream으로 데이터 전송하는 방식
 #### 구성 이유 : 전체 프로세스를 검증
 #### 검증 절차
  - agent 소스 내려받기</br>
-    git clone https://github.com/awslabs/amazon-kinesis-agent.git
+    	git clone https://github.com/awslabs/amazon-kinesis-agent.git
  - 설치 실행</br>
-    sudo ./setup --install
+    	sudo ./setup --install
  - config 파일 수정</br>
-    sudo vi /etc/aws-kinesis/agent.json
+    	sudo vi /etc/aws-kinesis/agent.json
 	```json
 	(localstack)
 	{
@@ -137,13 +144,13 @@
 	}
 	```
  - kinesis agent user nginx 로그 그룹에 권한 추가</br>
-    sudo gpasswd -a aws-kinesis-agent-user adm
+    	sudo gpasswd -a aws-kinesis-agent-user adm
 
  - kinesis agent 재시작</br>
-    sudo service aws-kinesis-agent restart
+    	sudo service aws-kinesis-agent restart
 
  - kinesis agent 로그파일 보기</br>
-    tail -f /var/log/aws-kinesis-agent/aws-kinesis-agent.log
+    	tail -f /var/log/aws-kinesis-agent/aws-kinesis-agent.log
     
  - nginx-log-bsh0817 버킷에 데이터 확인 및 Cloud Watch log 확인
 
