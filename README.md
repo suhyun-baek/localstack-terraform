@@ -57,23 +57,23 @@
 
 ### AWS 리소스 구성
 #### S3
- - 버킷 명 : nginx-log.bsh0817
+ - 버킷 명 : nginx-log-bsh0817
  - path 구조
   - 시간 단위로 json 형태로 변환된 nginx 로그</br>
-      nginx-log.bsh0817/kinesis/firehose/migration/day=YYYYDDMMHH/</br>
+      nginx-log-bsh0817/kinesis/firehose/migration/day=YYYYDDMMHH/</br>
   - 정상적으로 처리된 nginx 로그</br>
-      nginx-log.bsh0817/kinesis/firehose/origin/success/YYYY/DD/MM/HH</br>
+      nginx-log-bsh0817/kinesis/firehose/origin/success/YYYY/DD/MM/HH</br>
   - error nginx 로그</br>
-      nginx-log.bsh0817/kinesis/firehose/origin/error/processing-failed/YYYY/DD/MM/HH
+      nginx-log-bsh0817/kinesis/firehose/origin/error/processing-failed/YYYY/DD/MM/HH
  
 #### Kinesis Data Stream
- - Kinesis Data Stream 명 : nginx-log.bsh0817-stream</br>
+ - Kinesis Data Stream 명 : nginx-log-bsh0817-stream</br>
  
 #### Kinesis Firehose
- - Kinesis Firehose 명 : nginx-log.bsh0817-firehose</br>
- - source : nginx-log.bsh0817-stream</br>
- - Transform source records with AWS Lambda : firehose_lambda</br>
- - Amazon S3 destination : nginx-log.bsh0817</br>
+ - Kinesis Firehose 명 : nginx-log-bsh0817-firehose</br>
+ - source : nginx-log-bsh0817-stream</br>
+ - Transform source records with AWS Lambda : nginx-log-bsh0817_firehose_lambda</br>
+ - Amazon S3 destination : nginx-log-bsh0817</br>
      
 #### Lambda
  - Lambda 명 : firehose_lambda</br>
@@ -116,7 +116,7 @@
 	  "flows": [
 	    {
 	      "filePattern": "/var/log/nginx/access.log",
-	      "kinesisStream": "nginx-log.bsh0817-stream"
+	      "kinesisStream": "nginx-log-bsh0817-stream"
 	    }
 	  ]
 	}
@@ -131,7 +131,7 @@
 	  "flows": [
 	    {
 	      "filePattern": "/var/log/nginx/access.log",
-	      "kinesisStream": "nginx-log.bsh0817-stream"
+	      "kinesisStream": "nginx-log-bsh0817-stream"
 	    }
 	  ]
 	}
@@ -145,7 +145,7 @@
  - kinesis agent 로그파일 보기</br>
     tail -f /var/log/aws-kinesis-agent/aws-kinesis-agent.log
     
- - nginx-log.bsh0817 버킷에 데이터 확인 및 Cloud Watch log 확인
+ - nginx-log-bsh0817 버킷에 데이터 확인 및 Cloud Watch log 확인
 
 ### 실제 데이터 검증
 #### 방법: 실제 로그를 Python을 이용해 대량으로 전송시켜 성능 검증
