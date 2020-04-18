@@ -30,8 +30,18 @@
  	- terraform -v
 
 #### Docker
- - Docker 패키지 설치
- 	- sudo apt-get -y install docker
+ - 기존 Docker 패키지 삭제
+ 	- sudo apt-get -y remove docker docker-engine docker.io containerd runc
+ - HTTPS를 통해 저장소를 사용할 수 있도록 패키지 설치.
+	- sudo apt-get -y install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+ - Docker의 공식 GPG 키를 추가
+	- curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+ - 저장소 설정
+	- sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+ - apt-get update
+	- sudo apt-get update
+ - 설치
+	- sudo apt-get -y install docker-ce docker-ce-cli containerd.io
  - Test
  	- sudo docker run hello-world
  - ubuntu 계정에 Docker 실행 권한을 주기위해 그룹 추가
