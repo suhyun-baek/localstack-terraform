@@ -50,6 +50,7 @@
 ### 서비스 실행 방법
  - localstack 실행
  - terraform init/ apply
+ - aws 실제 계정의 경우 credentials 파일에 profile명을 bah0817로 설정했다.
 
 #### localstack
  - localstack/docker-compose.yml 디렉토리에서 docker-compose를 이용한 실행
