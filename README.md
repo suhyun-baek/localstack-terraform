@@ -59,24 +59,44 @@
 #### S3
  - 버킷 명 : nginx-log.bsh0817
  - path 구조
-  - 시간 단위로 json 형태로 변환된 로그</br>
-      nginx/kinesis/firehose/migration/day=YYYYDDMMHH/</br>
-  - 원본 로그</br>
-      nginx/kinesis/firehose/origin/success/YYYY/DD/MM/HH</br>
-  - error 로그</br>
-      nginx/kinesis/firehose/origin/error/YYYY/DD/MM/HH</br>
-      
+  - 시간 단위로 json 형태로 변환된 nginx 로그</br>
+      nginx-log.bsh0817/kinesis/firehose/migration/day=YYYYDDMMHH/</br>
+  - 정상적으로 처리된 nginx 로그</br>
+      nginx-log.bsh0817/kinesis/firehose/origin/success/YYYY/DD/MM/HH</br>
+  - error nginx 로그</br>
+      nginx-log.bsh0817/kinesis/firehose/origin/error/processing-failed/YYYY/DD/MM/HH
+ 
 #### Kinesis Data Stream
  - Kinesis Data Stream 명 : nginx-log.bsh0817-stream</br>
  
 #### Kinesis Firehose
  - Kinesis Firehose 명 : nginx-log.bsh0817-firehose</br>
-     source : nginx-log.bsh0817-stream</br>
-     Transform source records with AWS Lambda : firehose_lambda</br>
-     Amazon S3 destination : nginx-log.bsh0817</br>
+ - source : nginx-log.bsh0817-stream</br>
+ - Transform source records with AWS Lambda : firehose_lambda</br>
+ - Amazon S3 destination : nginx-log.bsh0817</br>
      
 #### Lambda
  - Lambda 명 : firehose_lambda</br>
  - runtime : python3.7</br>
 
+
+
+### 검증 시나리오
+
+### 검증 환경
+ - OS : ubuntu18.04
+ - nginx : nginx version: nginx/1.14.0 (Ubuntu)
+### 검증 환경 구성
+ - nginx, git 패키지 설치</br>
+    sudo apt-get install -y nginx git
+ - nginx 실행</br>
+   	sudo service nginx start
+    (정지 : sudo service nginx stop)
+    (재시작 : sudo service nginx restart)
+
+#### 상태 확인
+	sudo service nginx status
+ 
+### Kinesis agent 사용 검증
+### 검증 환경 구성
 
