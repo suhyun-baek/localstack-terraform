@@ -80,12 +80,12 @@
  - runtime : python3.7</br>
 
 
-
 ### 검증 시나리오
 
 ### 검증 환경
  - OS : ubuntu18.04
  - nginx : nginx version: nginx/1.14.0 (Ubuntu)
+ - Python : Python 3.6.9
 ### 검증 환경 구성
  - nginx, git 패키지 설치</br>
     sudo apt-get install -y nginx git
@@ -98,6 +98,7 @@
 ### Kinesis agent 사용해 프로세스 검증
 #### 방법: nginx에 실제 access log가 쌓이게 한 후에 Kinesis agent를 활용해 kinesis data stream으로 데이터 전송하는 방식
 #### 구성 이유 : 전체 프로세스를 검증
+#### 검증 절차
  - agent 소스 내려받기</br>
     git clone https://github.com/awslabs/amazon-kinesis-agent.git
  - 설치 실행</br>
@@ -143,8 +144,10 @@
 
  - kinesis agent 로그파일 보기</br>
     tail -f /var/log/aws-kinesis-agent/aws-kinesis-agent.log
-
+    
+ - nginx-log.bsh0817 버킷에 데이터 확인 및 Cloud Watch log 확인
 
 ### 실제 데이터 검증
 #### 방법: 실제 로그를 Python을 이용해 대량으로 전송시켜 성능 검증
 #### 구성 이유 : 다양한 로그 패턴의 오류 발생률 등을 확인하기위한 검증
+ - test/send-log-to-kinesis.py 파일 실행
