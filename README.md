@@ -14,11 +14,11 @@
 	 /test        = 검증을 위한 파일이 담겨있다.
 ### 환경 구성
 #### common
- - 공통 작업
+##### 공통 작업</br>
 	sudo apt-get update
 
 #### Terraform
-- 필요 패키지 설치
+ - 필요 패키지 설치</br>
 	sudo apt-get install unzip
  - 다운로드</br>
 	wget https://releases.hashicorp.com/terraform/0.12.20/terraform_0.12.20_linux_amd64.zip
