@@ -11,5 +11,5 @@ locals {
         "Created-at" = "2020-04-16"
     }
     log_bucket_kinesis_origin_path = "${var.project_name}/kinesis/firehose/origin/"
-    log_bucket_base_path = "${var.project_name}/kinesis/firehose/migration/day="
+    log_bucket_base_path = "${var.project_name}/kinesis/firehose/migration/"
 }

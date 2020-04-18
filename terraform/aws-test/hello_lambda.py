@@ -112,7 +112,7 @@ def fn_convert_log_to_json(param):
             # 로그의 time을 15/Apr/2020:08:34:22 +0000 형태를 한국 시로 변경
             log_time = datetime.fromtimestamp(datetime.strptime(payload_pattern_match_result["time"], log_time_format).timestamp(), tz=KST)
             # 시간 단위로 로그 정리
-            payload_time = log_time.strftime('%Y%m%d%H')
+            payload_time = log_time.strftime('year=%Y/month=%m/day=%d/hour=%H')
             if payload_time in responce:
                 responce[payload_time] += str(json.dumps(payload_pattern_match_result, ensure_ascii=False)) + "\n"
             else:
@@ -137,7 +137,7 @@ def fn_data_pattern():
         r'(?P<status>[0-9]+)',              # status
         r'(?P<size>\S+)',                   # size
         r'"(?P<referer>.*)"',               # referer
-        r'"(?P<userAgent>.*)"',                 # user agent
+        r'"(?P<useragent>.*)"',                 # user agent
     ]
     
     return re.compile(r'\s+'.join(parts)+r'\s*\Z')
