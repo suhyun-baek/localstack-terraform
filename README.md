@@ -95,12 +95,14 @@
     (재시작 : sudo service nginx restart)
     (상태 확인 : sudo service nginx status)
  
-### Kinesis agent 사용 검증
+### Kinesis agent 사용해 프로세스 검증
+#### 방법: nginx에 실제 access log가 쌓이게 한 후에 Kinesis agent를 활용해 kinesis data stream으로 데이터 전송하는 방식
+#### 구성 이유 : 전체 프로세스를 검증
  - agent 소스 내려받기</br>
     git clone https://github.com/awslabs/amazon-kinesis-agent.git
  - 설치 실행</br>
     sudo ./setup --install
- - config 파일 수정
+ - config 파일 수정</br>
     sudo vi /etc/aws-kinesis/agent.json
 	```json
 	{
@@ -112,14 +114,21 @@
 	  "flows": [
 	    {
 	      "filePattern": "/var/log/nginx/access.log",
-	      "kinesisStream": "nginx-log.bsh0817-stream",
-	      "dataProcessingOptions": [
-		    {
-			"optionName": "LOGTOJSON",
-			"logFormat": "COMBINEDAPACHELOG"
-		    }
-	       ]
+	      "kinesisStream": "nginx-log.bsh0817-stream"
 	    }
 	  ]
 	}
 	```
+ - kinesis agent user nginx 로그 그룹에 권한 추가</br>
+    sudo gpasswd -a aws-kinesis-agent-user adm
+
+ - kinesis agent 재시작</br>
+    sudo service aws-kinesis-agent restart
+
+ - kinesis agent 로그파일 보기</br>
+    tail -f /var/log/aws-kinesis-agent/aws-kinesis-agent.log
+
+
+### 실제 데이터 검증
+#### 방법: 실제 로그를 Python을 이용해 대량으로 전송시켜 성능 검증
+#### 구성 이유 : 다양한 로그 패턴의 오류 발생률 등을 확인하기위한 검증
