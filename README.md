@@ -16,7 +16,7 @@
 #### common
  - 공통 작업
 	sudo apt-get update
-    
+
 #### Terraform
 - 필요 패키지 설치
 	sudo apt-get install unzip
