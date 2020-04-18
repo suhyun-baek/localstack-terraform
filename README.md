@@ -25,25 +25,25 @@
  - 압축 풀기
  	- unzip terraform_0.12.20_linux_amd64.zip
  - 파일 이동
-    	- sudo cp terraform /usr/local/bin/
+ 	- sudo cp terraform /usr/local/bin/
  - 버전 확인
-    	- terraform -v
+ 	- terraform -v
 
 #### Docker
  - Docker 패키지 설치
-    	- sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+ 	- sudo apt-get -y install docker-ce docker-ce-cli containerd.io
  - Test
-    	- sudo docker run hello-world
+ 	- sudo docker run hello-world
  - ubuntu 계정에 Docker 실행 권한을 주기위해 그룹 추가
-    	- sudo usermod -aG docker ubuntu
+ 	- sudo usermod -aG docker ubuntu
  - Docker 서비스 재시작
-    	- sudo service docker restart
+ 	- sudo service docker restart
   
 #### Docker-compose
  - Docker-compose 다운로드
-    	- sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+ 	- sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
  - 실행 권한 추가
-    	- sudo chmod +x /usr/local/bin/docker-compose
+ 	- sudo chmod +x /usr/local/bin/docker-compose
 
  
  
@@ -53,13 +53,13 @@
 
 #### localstack
  - localstack/docker-compose.yml 디렉토리에서 docker-compose를 이용한 실행
-    	- docker-compose up
+ 	- docker-compose up
  - http://localhost:8080 접속해서 정상적으로 실행중인지 확인
 
 #### terraform 
  - terraform/local/ 디렉토리에서 아래 두 명령어 실행
-    	- terraform init
-    	- terraform apply
+  	- terraform init
+ 	- terraform apply
 
 
 ### AWS 리소스 구성
@@ -94,10 +94,10 @@
  - nginx : nginx version: nginx/1.14.0 (Ubuntu)
  - Python : Python 3.6.9
 ### 검증 환경 구성
- - nginx, git 패키지 설치</br>
-    	- sudo apt-get install -y nginx git
- - nginx 실행</br>
-    	- sudo service nginx start</br>
+ - nginx, git 패키지 설치
+ 	- sudo apt-get install -y nginx git
+ - nginx 실행
+ 	- sudo service nginx start</br>
     	(정지 : sudo service nginx stop)</br>
     	(재시작 : sudo service nginx restart)</br>
     	(상태 확인 : sudo service nginx status)
@@ -107,11 +107,11 @@
 #### 구성 이유 : 전체 프로세스를 검증
 #### 검증 절차
  - agent 소스 내려받기
-    	- git clone https://github.com/awslabs/amazon-kinesis-agent.git
+ 	- git clone https://github.com/awslabs/amazon-kinesis-agent.git
  - 설치 실행
-    	- sudo ./setup --install
+ 	- sudo ./setup --install
  - config 파일 수정
-    	- sudo vi /etc/aws-kinesis/agent.json
+ 	- sudo vi /etc/aws-kinesis/agent.json
 	```json
 	(localstack)
 	{
@@ -144,13 +144,13 @@
 	}
 	```
  - kinesis agent user nginx 로그 그룹에 권한 추가
-    	- sudo gpasswd -a aws-kinesis-agent-user adm
+ 	- sudo gpasswd -a aws-kinesis-agent-user adm
 
  - kinesis agent 재시작
-    	- sudo service aws-kinesis-agent restart
+ 	- sudo service aws-kinesis-agent restart
 
  - kinesis agent 로그파일 보기
-    	- tail -f /var/log/aws-kinesis-agent/aws-kinesis-agent.log
+ 	- tail -f /var/log/aws-kinesis-agent/aws-kinesis-agent.log
     
  - nginx-log-bsh0817 버킷에 데이터 확인 및 Cloud Watch log 확인
 
