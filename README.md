@@ -1,6 +1,6 @@
 ## localstack-terraform 
 ### 환경
- - OS : ubuntu18.04
+ - OS : ubuntu18.04 (AWS IAM : ami-0cd7b0de75f5a35d1)
  - Terraform : Terraform v0.12.20
  - Docker : Docker version 19.03.8
  - Docker-compose : docker-compose version 1.21.2
