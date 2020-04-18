@@ -57,10 +57,12 @@
  - http://localhost:8080 접속해서 정상적으로 실행중인지 확인
 
 #### terraform 
- - terraform/local/ 디렉토리에서 아래 두 명령어 실행
+ - (localstack) terraform/local/ 디렉토리에서 아래 두 명령어 실행
   	- terraform init
  	- terraform apply
-
+ - (aws) terraform/local/ 디렉토리에서 아래 두 명령어 실행
+  	- terraform init
+ 	- terraform apply
 
 ### AWS 리소스 구성
 #### S3
